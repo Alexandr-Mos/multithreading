@@ -14,7 +14,7 @@ public class DockService {
 	
 	public Dock getFreeDock() {
 		for (Dock d : list) {
-			if (!d.isAlive()) {
+			if (!d.isOccupied()) {
 				return d;
 			}
 		}

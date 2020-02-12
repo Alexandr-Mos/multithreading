@@ -1,6 +1,7 @@
 package multithreading;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /*Задание 4. Многопоточность. Порт . Корабли заходят в порт для
 разгрузки/загрузки контейнеров. Число контейнеров, находящихся в текущий момент
@@ -11,19 +12,28 @@ import java.util.ArrayList;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
-		Port port = new Port(4, 20);
+		Scanner scanner = new Scanner(System.in);
+		Port port = new Port(20, 20);
 		
 		for (int i = 0; i < 20; i++) {
-			int capacity = (int) (Math.random()*10);
+			//int capacity = (int) (Math.random()*10 + 10);
+			int capacity = scanner.nextInt();
 			ArrayList<Container> containersList = new ArrayList<Container>();
-			for (int j = 0; j < (int) (Math.random()*capacity); j++) {
+			int count = scanner.nextInt();
+			for (int j = 0; j < count; j++) {
 				containersList.add(new Container());
 			}
+			//if (((int)(Math.random()*4)) != 0) {
+			//	for (int j = 0; j < (int) (Math.random()*capacity); j++) {
+			//	containersList.add(new Container());
+			//}
+			//}
+			
 			Ship ship = new Ship(capacity);
 			ship.setContainersList(containersList);
-			System.out.println("Прибыл корабль " + ship);
+			System.out.println("ПРИБЫЛ корабль " + ship);
 			port.recieveShip(ship);
-			Thread.sleep(5000);
+			Thread.sleep(3000);
 		}
 
 	}

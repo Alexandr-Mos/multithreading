@@ -25,9 +25,24 @@ public class Loadable {
 		}
 	}
 
-	public synchronized Container unloadContainer() {
+	public synchronized void addContainer(Container container) throws InterruptedException {
+		while (isFull()) {
+			System.out.println("ПОЛНЫЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ ");
+
+			wait();
+		}
+		containersList.add(container);
+		notify();
+	}
+
+	public synchronized Container unloadContainer() throws InterruptedException {
+		while (isEmpty()) {
+			System.out.println("ПУСТОЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ");
+			wait();
+		}
 		Container con = getContainer();
 		removeContainer();
+		notify();
 		return con;
 	}
 
@@ -40,15 +55,11 @@ public class Loadable {
 	}
 
 	public synchronized boolean isFull() {
-		if (containersList.size() == capacity) {
+		if (containersList.size() >= capacity) {
 			return true;
 		} else {
 			return false;
 		}
-	}
-
-	public synchronized void addContainer(Container container) {
-		containersList.add(container);
 	}
 
 	public synchronized int getCapacity() {
