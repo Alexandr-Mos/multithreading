@@ -13,13 +13,14 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
 		Scanner scanner = new Scanner(System.in);
-		Port port = new Port(20, 20);
+		Port port = new Port(2, 20);
 		
 		for (int i = 0; i < 20; i++) {
 			//int capacity = (int) (Math.random()*10 + 10);
-			int capacity = scanner.nextInt();
+			int capacity = scanner.nextInt();               //задаем вместимость корабля
+			int count = scanner.nextInt();                  // задаем количество контейнерова на корабле              
 			ArrayList<Container> containersList = new ArrayList<Container>();
-			int count = scanner.nextInt();
+			
 			for (int j = 0; j < count; j++) {
 				containersList.add(new Container());
 			}
@@ -33,7 +34,7 @@ public class Main {
 			ship.setContainersList(containersList);
 			System.out.println("ПРИБЫЛ корабль " + ship);
 			port.recieveShip(ship);
-			Thread.sleep(3000);
+			//Thread.sleep(3000);
 		}
 
 	}

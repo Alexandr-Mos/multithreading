@@ -8,13 +8,9 @@ public class Ship extends Loadable {
 		super(capacity);
 	}
 
-
-
 	public int getId() {
 		return id;
 	}
-
-
 
 	@Override
 	public String toString() {

@@ -8,13 +8,14 @@ public class Port extends Loadable {
 	private ExecutorService executor; 
 	
 	
-	public Port(int docksCount, int capacity) {
-		super(capacity);
+	public Port(int docksCount, int capacity) {  // количество доков, вместимость порта
+		super(capacity); 
 		dockService = new DockService(docksCount, this);
 		executor = Executors.newFixedThreadPool(docksCount);
 		
 	}
 	
+	//отправляем корабль в док
 	public void recieveShip(Ship ship) throws InterruptedException {
 		//Dock dock = null;
 		//while (dock == null) {

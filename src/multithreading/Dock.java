@@ -2,22 +2,14 @@ package multithreading;
 
 public class Dock extends Thread {
 	private volatile static Port port;
-	private volatile boolean isOccupied;
+	//private volatile boolean isOccupied;
 	private volatile Ship ship;
-	//private volatile static int dockCount = 0;
-	//private volatile int id ;
+
 
 	public Dock(Port port) {
 		Dock.port = port;
-		isOccupied = false;
-		ship = null;
-		//if (++dockCount > 4) {
-		//	dockCount = 1;
-		//	id = dockCount; 
-		//} else {
-		//	id = dockCount;
-		//}
-		 
+		//isOccupied = false;
+		ship = null;	 
 	}
 
 	@Override
@@ -26,7 +18,7 @@ public class Dock extends Thread {
 			return;
 		}
 
-		setOccupied(true);
+		//setOccupied(true);
 
 		try {
 			if (ship.isEmpty()) {
@@ -39,42 +31,26 @@ public class Dock extends Thread {
 			e.printStackTrace();
 		}
 
-		setOccupied(false);
+		//setOccupied(false);
 	}
 
+	//загрузка корабля
 	public synchronized void load() throws InterruptedException {
 		while (!ship.isFull()) {
-			//while (port.isEmpty()) {
-			//	System.out.println("ПУСТОЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ " + ship);
-			//	wait();
-			//}
-			
 			ship.addContainer(port.unloadContainer());
 			System.out.println(ship + "<-----");
-			
 			Thread.sleep(1500);
-			Thread.yield();
-	
-			
 		}
 		System.out.println("ЗАГРУЗКА окончена " + ship + " в доке " + this.toString() + " " + port);
 
 	}
 
+	//Разгрузка корабля
 	public synchronized void unload() throws InterruptedException {
 		while (!ship.isEmpty()) {
-			//while (port.isFull()) {
-			//	System.out.println("ПОЛНЫЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ " + ship);
-			//	port.wait();
-			//}
-			
-			port.addContainer(ship.unloadContainer());
 			System.out.println(ship + "----->");
-			
-			Thread.sleep(1500);
-			Thread.yield();
-			
-			
+			port.addContainer(ship.unloadContainer());
+			Thread.sleep(1500);		
 		}
 		System.out.println("РАЗГРУЗКА окончена " + ship + " в доке " + this.toString() + " " + port);
 
@@ -82,13 +58,13 @@ public class Dock extends Thread {
 	
 	
 
-	public synchronized boolean isOccupied() {
-		return isOccupied;
-	}
+	//public synchronized boolean isOccupied() {
+	//	return isOccupied;
+	//}
 
-	public synchronized void setOccupied(boolean isOccupied) {
-		this.isOccupied = isOccupied;
-	}
+	//public synchronized void setOccupied(boolean isOccupied) {
+	//	this.isOccupied = isOccupied;
+	//}
 
 	public synchronized Ship getShip() {
 		return ship;

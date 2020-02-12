@@ -6,37 +6,29 @@ public class Loadable {
 	private volatile int capacity;
 	private volatile ArrayList<Container> containersList;
 
-	public Loadable(int capacity) {
-		if (capacity < 0) {
+	public Loadable(int capacity) { 
+		if (capacity < 0) {        // проверка на корректность грузоподьемности
 			this.capacity = 0;
 		} else {
 			this.capacity = capacity;
 		}
 		containersList = new ArrayList<Container>();
 	}
+	
 
-	public synchronized Container getContainer() {
-		return containersList.get(0);
-	}
-
-	public synchronized void removeContainer() {
-		if (!containersList.isEmpty()) {
-			containersList.remove(0);
-		}
-	}
-
+	//загрузка контейнера
 	public synchronized void addContainer(Container container) throws InterruptedException {
-		while (isFull()) {
+		while (isFull()) { //если обьект загружен, то включается режим ожидания
 			System.out.println("ПОЛНЫЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ ");
-
 			wait();
 		}
 		containersList.add(container);
 		notify();
 	}
 
+	//разгрузка контейнера
 	public synchronized Container unloadContainer() throws InterruptedException {
-		while (isEmpty()) {
+		while (isEmpty()) { //если обьект пустой, то включается режим ожидания
 			System.out.println("ПУСТОЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ");
 			wait();
 		}
@@ -44,6 +36,16 @@ public class Loadable {
 		removeContainer();
 		notify();
 		return con;
+	}
+	
+	public synchronized Container getContainer() {
+		return containersList.get(0);
+	}
+	
+	public synchronized void removeContainer() {
+		if (!containersList.isEmpty()) {
+			containersList.remove(0);
+		}
 	}
 
 	public synchronized boolean isEmpty() {
