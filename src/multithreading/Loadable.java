@@ -15,11 +15,20 @@ public class Loadable {
 		containersList = new ArrayList<Container>();
 	}
 	
+	public Loadable(int capacity, ArrayList<Container> containersList) { 
+		if (capacity < 0) {       
+			this.capacity = 0;
+		} else {
+			this.capacity = capacity;
+		}
+		this.containersList = containersList;
+	}
+	
 
 	//загрузка контейнера
 	public synchronized void addContainer(Container container) throws InterruptedException {
 		while (isFull()) { //если обьект загружен, то включается режим ожидания
-			System.out.println("ПОЛНЫЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ ");
+			System.out.println("ПОЛНЫЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ РАЗГРУЗКИ");
 			wait();
 		}
 		containersList.add(container);
@@ -29,7 +38,7 @@ public class Loadable {
 	//разгрузка контейнера
 	public synchronized Container unloadContainer() throws InterruptedException {
 		while (isEmpty()) { //если обьект пустой, то включается режим ожидания
-			System.out.println("ПУСТОЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ");
+			System.out.println("ПУСТОЙ ПОРТ КОРАБЛЬ ОЖИДАЕТ ЗАГРУЗКИ");
 			wait();
 		}
 		Container con = getContainer();

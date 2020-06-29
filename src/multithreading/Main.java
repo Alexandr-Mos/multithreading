@@ -13,25 +13,32 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
 		Scanner scanner = new Scanner(System.in);
-		Port port = new Port(2, 20);
+		Port port = new Port(2, 20);  //создаем порт на 2 причала и вместимостью 20 контейнеров
 		
 		for (int i = 0; i < 20; i++) {
-			//int capacity = (int) (Math.random()*10 + 10);
+			
+			//ручное управление
+			System.out.print("ВВЕДИТЕ вместимость прибывшего корабля >> ");
 			int capacity = scanner.nextInt();               //задаем вместимость корабля
-			int count = scanner.nextInt();                  // задаем количество контейнерова на корабле              
+			System.out.print("ВВЕДИТЕ количество контейнеров на корабле >> ");
+			int count = scanner.nextInt();                  // задаем количество контейнеров на корабле              
 			ArrayList<Container> containersList = new ArrayList<Container>();
 			
 			for (int j = 0; j < count; j++) {
 				containersList.add(new Container());
 			}
-			//if (((int)(Math.random()*4)) != 0) {
-			//	for (int j = 0; j < (int) (Math.random()*capacity); j++) {
-			//	containersList.add(new Container());
-			//}
-			//}
 			
-			Ship ship = new Ship(capacity);
-			ship.setContainersList(containersList);
+			/* генерация случайных кораблей
+			int capacity = (int) (Math.random()*10 + 10);
+			ArrayList<Container> containersList = new ArrayList<Container>();
+			if (((int)(Math.random() * 4)) != 0) {
+				for (int j = 0; j < (int) (Math.random() * capacity); j++) {
+				containersList.add(new Container());
+				}
+			}
+			*/
+			
+			Ship ship = new Ship(capacity, containersList);
 			System.out.println("ПРИБЫЛ корабль " + ship);
 			port.recieveShip(ship);
 			//Thread.sleep(3000);

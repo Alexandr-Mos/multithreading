@@ -2,13 +2,11 @@ package multithreading;
 
 public class Dock extends Thread {
 	private volatile static Port port;
-	//private volatile boolean isOccupied;
 	private volatile Ship ship;
 
 
 	public Dock(Port port) {
 		Dock.port = port;
-		//isOccupied = false;
 		ship = null;	 
 	}
 
@@ -18,10 +16,9 @@ public class Dock extends Thread {
 			return;
 		}
 
-		//setOccupied(true);
 
 		try {
-			if (ship.isEmpty()) {
+			if (ship.isGoingToLoad()) {
 				load();
 			} else {
 				unload();
@@ -31,15 +28,14 @@ public class Dock extends Thread {
 			e.printStackTrace();
 		}
 
-		//setOccupied(false);
 	}
 
 	//загрузка корабля
 	public synchronized void load() throws InterruptedException {
 		while (!ship.isFull()) {
 			ship.addContainer(port.unloadContainer());
-			System.out.println(ship + "<-----");
-			Thread.sleep(1500);
+			System.out.println(ship + "<-----" + port);
+			Thread.sleep(1500);  //скорость загрузки контейнера(мешьше - быстрее)
 		}
 		System.out.println("ЗАГРУЗКА окончена " + ship + " в доке " + this.toString() + " " + port);
 
@@ -48,23 +44,13 @@ public class Dock extends Thread {
 	//Разгрузка корабля
 	public synchronized void unload() throws InterruptedException {
 		while (!ship.isEmpty()) {
-			System.out.println(ship + "----->");
+			System.out.println(ship + "----->" + port);
 			port.addContainer(ship.unloadContainer());
-			Thread.sleep(1500);		
+			Thread.sleep(1500);	//скорость разгрузки контейнера(мешьше - быстрее)	
 		}
 		System.out.println("РАЗГРУЗКА окончена " + ship + " в доке " + this.toString() + " " + port);
 
 	}
-	
-	
-
-	//public synchronized boolean isOccupied() {
-	//	return isOccupied;
-	//}
-
-	//public synchronized void setOccupied(boolean isOccupied) {
-	//	this.isOccupied = isOccupied;
-	//}
 
 	public synchronized Ship getShip() {
 		return ship;
