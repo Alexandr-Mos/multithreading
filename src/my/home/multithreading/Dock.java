@@ -1,4 +1,4 @@
-package multithreading;
+package my.home.multithreading;
 
 public class Dock extends Thread {
 	private volatile static Port port;
