@@ -1,4 +1,4 @@
-# module6-task4-multithreading
+# task4-multithreading
 
 **Решение задачи из 6-го модуля _Java Online Training_**
 
